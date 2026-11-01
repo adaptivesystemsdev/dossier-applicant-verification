@@ -100,14 +100,22 @@ so (`FORENSICS_INCOMPLETE`) instead of passing.
 
 ## Channels and outputs
 
+- **Ask the applicant:** a private upload link per case (`/dossier/upload#t=…`): the applicant passes a quick human
+  check per file and sends their documents straight into their case. They see who is asking, which documents the
+  case needs and the files they sent, never what the checks found. Only a hash of the token is stored; links expire
+  (1–30 days), take a fixed number of files, and stop when the case is decided or erased; a dead link answers the same
+  404 whatever the reason. The token travels in the URL fragment and leaves the address bar before any analytics runs.
 - **Upload or drop** onto a case or onto the list; PDFs, scans and phone photos.
 - **By email:** forward an applicant's email to the intake address; a case is opened for it, or the documents
   join the case whose reference is in the subject (only from the team itself, or from that case's sender with a
   passing DKIM signature).
+- **Signed webhooks:** `case.created`, `case.documents_added`, `case.evaluated`, `case.decided` (HMAC signature,
+  retries, delivery log) into n8n, Zapier or a CRM; **CSV / JSON export** of every case (formula-safe CSV).
 - **Team notifications:** Slack, Telegram or email when a case fails a check or needs a person: the case
   reference and initials only, never names, addresses or amounts.
-- **Retention and erasure:** documents erased after a retention period, or one applicant's at once; the
-  decision log keeps no personal data.
+- **Erasure:** one applicant at once on request, or every applicant past the retention period: documents purged
+  (a file another applicant also sent stays as their evidence), the case keeps only its outcome, decision and dates,
+  pending webhooks and notifications about it are cancelled and cleared.
 
 ## Measured
 
@@ -125,7 +133,7 @@ of birth altered in the MRZ · a seven-month-old bill. The live numbers (applica
 caught, the eval) are published at `https://adaptivesystems.dev/live/dossier/stats.json`; the activity feed is
 built from fixed templates and never carries names, amounts, account numbers or file names.
 
-Tests: **285** for the Docket + Dossier engine (pytest, mypy `--strict`, the model scripted), plus a forgery
+Tests: **295** for the Docket + Dossier engine (pytest, mypy `--strict`, the model scripted), plus a forgery
 generator that builds the eval's packs.
 
 ## Guardrails (by design)
