@@ -79,6 +79,12 @@ what was sent, and the app shows it ("What it saw").
 - With the generator's exact readings (free "truth" mode, 44 packs): 44 / 44 agree, every genuine pack *low*.
 - Live (9 cases on 2026-11-02): 9 / 9 agree; median answer ≈ 200 ms.
 
+### In the review queue
+The queue orders cases by the checks: failed checks first, then the number of failures; the second opinion's
+probability of "high" only breaks ties (in Docket, measured on 122 documents, putting it any higher made the ranking
+worse). Every opinion records its `effect` (none / noted / sent to a person), the same record across the three
+products.
+
 ### What it is for, and what it is not
 It reads the checks' own codes, so **it cannot find a forgery the checks missed** (and in the eval it found none).
 Its value is an independent, cheap sanity check on the final call, with a documented risk band per case, and a
