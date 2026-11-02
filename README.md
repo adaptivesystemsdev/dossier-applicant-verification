@@ -121,8 +121,9 @@ so (`FORENSICS_INCOMPLETE`) instead of passing.
 
 | Metric | Value | Notes |
 |---|---|---|
-| Forged packs caught | **40 / 40** | published eval 2026-11-01: 10 forgery types × 4 seeds through the production model and every check |
+| Forged packs caught | **40 / 40** | published eval 2026-11-02: 10 forgery types × 4 seeds through the production model and every check |
 | False alarms | **0 / 4** genuine packs | same run: a genuine pack must come out *consistent* |
+| Second opinion agrees | **42 / 44** packs | TypeSafe Jev on the same packs; raised the risk on 40 / 40 forged packs, sent **0 / 4** genuine packs to a person (noted a moderate doubt on 2) |
 | Time per applicant pack | **median 8.1 s** | three documents read, examined and compared |
 | Time per document | **≈ 4.2 s** read · **36 ms** forensics · **6 ms** checks | the statement shown above |
 
@@ -133,8 +134,29 @@ of birth altered in the MRZ · a seven-month-old bill. The live numbers (applica
 caught, the eval) are published at `https://adaptivesystems.dev/live/dossier/stats.json`; the activity feed is
 built from fixed templates and never carries names, amounts, account numbers or file names.
 
-Tests: **295** for the Docket + Dossier engine (pytest, mypy `--strict`, the model scripted), plus a forgery
+Tests: **308** for the Docket + Dossier engine (pytest, mypy `--strict`, the model scripted), plus a forgery
 generator that builds the eval's packs.
+
+## Second opinion
+
+After the checks, a separate decision model (TypeSafe Jev, the same overlay as Docket's documents and Front Desk's
+leads) is asked how likely a forgery is. It sees **evidence only**: the kinds of documents, the reason codes and the
+consistency counts, never a name, address, number, date or file. It is asked about every checked case and can
+**only make the outcome stricter**: a strong "high risk" on a case whose checks all passed sends it to a person; on
+a case a person sees anyway its view is recorded; it never clears a failed check. The app shows the risk band, its
+probabilities, whether it agrees with the checks, the model, the timing and exactly what it saw, or why it wasn't
+asked. Measured on the published eval above: it adds no false alarms, and (seeing only the checks' codes) it finds
+nothing the checks miss. Its value is a cheap, independent sanity check on the decision, not a detector.
+
+## Real statements
+
+A genuine bank statement emailed in by the owner was flagged *balances don't add up*: a side panel printed beside
+the rows ("Average credit balance £606.00") was read as row balances, two equal payments on one day were read as
+one row, dates had no year. The fixes are general: code learns each money column's position from the values (the
+position that lines up with the most row lines), keeps a printed figure with the one row it belongs to, checks
+every figure printed in the balance column even if no row quoted it, and reports a row the reading skipped as such
+(a person checks the rows) only when putting the skipped amount back makes every balance add up. All four model
+readings of that statement now come out right, and the forgery eval is unchanged.
 
 ## Guardrails (by design)
 
@@ -155,6 +177,10 @@ generator that builds the eval's packs.
 - The comparison is the product. One document on its own says little; the same person, address and dates
   across three documents and a declaration say a lot.
 - Measure false alarms as hard as detection. A checker that flags genuine applicants gets switched off.
+- Synthetic packs are not enough. The first real statement found five reading problems the generator never made;
+  each became a general rule and a regression test with made-up numbers.
+- A second opinion that only sees your own reason codes can't find what the checks miss. Measure what it is for
+  (agreement, no added false alarms) and say so.
 
 ---
 
