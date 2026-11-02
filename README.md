@@ -182,6 +182,8 @@ readings of that statement now come out right, and the forgery eval is unchanged
 
 ## What I learned
 
+The long version, with dates, numbers and what didn't work: [ENGINEERING_NOTES.md](ENGINEERING_NOTES.md).
+
 - A forgery that looks perfect on screen usually isn't perfect in the file: the saves, the fonts and the text
   under a box tell the story, and they are cheap to check in code.
 - The comparison is the product. One document on its own says little; the same person, address and dates
