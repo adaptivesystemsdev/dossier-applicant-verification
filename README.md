@@ -82,8 +82,18 @@ so (`FORENSICS_INCOMPLETE`) instead of passing.
   <img src="docs/img/list.webp" alt="Cases: one row per applicant with the outcome and the main findings" width="900">
 </p>
 
-- **Cases:** one row per applicant, what they declared and the documents they sent; outcome and main findings
-  at a glance; drop files on the list to start a new applicant with them.
+- **Overview:** live numbers from the server (applicants, waiting for a decision, failed checks, time per
+  document, second-opinion agreement), applicants per day by outcome, what the checks found, a **live pipeline**
+  where each applicant's card moves as its documents are read, checked and examined (server-sent events), time per
+  stage (the model reads in ~2 s, code does everything else in milliseconds), how documents arrived, decisions and
+  models.
+- **Review queue:** applicants waiting for a decision, the likeliest forgery first (failed checks, most failures,
+  oldest), real cases apart from samples, a view of applicants whose upload link is still open; keyboard j / k /
+  Enter, and every case links to the next one waiting.
+- **Cases:** one row per applicant, what they declared and the documents they sent; outcome, main findings and the
+  second opinion at a glance; drop files on the list to start a new applicant with them.
+- **Activity:** every step of every applicant's documents in plain English, live. **Accuracy:** the published
+  eval per forgery type with the second opinion on the same packs.
 - **Case view:** each document's page with every value boxed where it was read and every finding boxed where
   it is (red), the consistency matrix (declared details vs each document), the file's own story (producer,
   saves, hidden text, fonts), the second opinion, and a decision (accept / request a document / reject) that is
@@ -95,7 +105,7 @@ so (`FORENSICS_INCOMPLETE`) instead of passing.
 
 - **Settings (its own, separate from Docket's):** the case policy (documents a case needs, how recent proof of
   address must be, expired IDs, income tolerance), team notifications, reading (OCR), retention, email intake
-  and the public demo, each explained in place.
+  and the public demo, every field with an (i) that explains it in Dossier's words.
 - **Sample cases:** one click creates a genuine applicant and seven forged ones to watch them get caught.
 
 ## Channels and outputs
