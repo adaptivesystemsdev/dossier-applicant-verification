@@ -131,8 +131,8 @@ so (`FORENSICS_INCOMPLETE`) instead of passing.
 
 | Metric | Value | Notes |
 |---|---|---|
-| Forged packs caught | **40 / 40** | published eval 2026-11-02: 10 forgery types × 4 seeds through the production model and every check |
-| False alarms | **0 / 4** genuine packs | same run: a genuine pack must come out *consistent* |
+| Forged packs caught | **40 / 40** | published eval 2026-11-02 on a **synthetic** test set: 10 forgery types × 4 seeds through the production model and every check |
+| False alarms | **0 / 4** genuine packs | same run: a genuine pack must come out *consistent*; 4 synthetic genuine packs, so real documents can still raise false alarms the generator cannot |
 | Second opinion agrees | **42 / 44** packs | TypeSafe Jev on the same packs; raised the risk on 40 / 40 forged packs, sent **0 / 4** genuine packs to a person (noted a moderate doubt on 2) |
 | Time per applicant pack | **median 8.1 s** | three documents read, examined and compared |
 | Time per document | **≈ 4.2 s** read · **36 ms** forensics · **6 ms** checks | the statement shown above |
