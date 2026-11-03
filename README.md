@@ -127,6 +127,13 @@ so (`FORENSICS_INCOMPLETE`) instead of passing.
   (a file another applicant also sent stays as their evidence), the case keeps only its outcome, decision and dates,
   pending webhooks and notifications about it are cancelled and cleared.
 
+## In your AI assistant (MCP)
+
+The same public MCP server as Docket's has a `dossier_check_pack` tool: pick a forgery (or none), a synthetic
+applicant's pack is built with it and checked by Dossier, and the outcome, findings, consistency matrix and second
+opinion come back into Claude, where you can ask why. OAuth, a human check on the consent page, per-person limits,
+the sandbox erased after 30 minutes. Working in Claude since 2026-11-03. How to connect: [https://adaptivesystems.dev/mcp](https://adaptivesystems.dev/mcp).
+
 ## Measured
 
 | Metric | Value | Notes |
